@@ -79,7 +79,7 @@ def main():
         docker_id = getid()
         print("[*] Cleaning up docker container")
         #read AUTO_DOCKER_CONTAINER_ID file
-        with open("AUTO_DOCKER_CONTAINER_ID", "r") as f:
+        with open("AUTO_DOCKER_ID", "r") as f:
             docker_iddel = f.read()
         #delete AUTO_DOCKER_CONTAINER_ID file
         os.remove("AUTO_DOCKER_CONTAINER_ID")
