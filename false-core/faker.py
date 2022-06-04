@@ -13,8 +13,8 @@ args = parser.parse_args()
 
 #imports done
 #variables
-dockerusername = "editme"
-dockerpassword = "editme" #change to the password u have set in docker file
+dockerusername = "root"
+dockerpassword = "abc" #change to the password u have set in docker file
 docker_image = "ubuntu:latest"  #placeholder for main
 #variables done
 client = docker.from_env()
