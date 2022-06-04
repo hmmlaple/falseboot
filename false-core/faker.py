@@ -6,6 +6,18 @@ import os
 import docker
 import shutil
 import subprocess
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-m ", "--mode", help="cleanup or start", required=True)
+args = parser.parse_args()
+if args.mode == "cleanup":
+    nein()
+elif args.mode == "start":
+    maien()
+else:
+    print("[!] Error: invalid mode")
+    sys.exit(1)
+#make docker function done
 
 
 #imports done
@@ -64,74 +76,63 @@ def ssh_startdocker(docker_container_id):
 #make docker function done
 
 #connect to docker container done
-def main():
-    #ask user if they want to clean up container or start it
-    print("[*] Do you want to clean up the container or start it?")
-    print("[*] 1. Clean up")
-    print("[*] 2. Start")
-    choice = input("[*] Enter choice: ")
-    if choice == "1":
-        #clean up docker container
-        docker_id = getid()
-        print("[*] Cleaning up docker container")
-        #read AUTO_DOCKER_CONTAINER_ID file
-        with open("AUTO_DOCKER_ID", "r") as f:
-            docker_iddel = f.read()
-        #delete AUTO_DOCKER_CONTAINER_ID file
-        os.remove("AUTO_DOCKER_ID")
-        #clean up docker container
-        docker_cleanup(docker_iddel)
-    elif choice == "2":
-        #start docker container
-        print("[*] Starting docker container")
-        docker_make()
-        docker_id = getid()
-        print("[*] Connecting to docker container")
-        print("[*] Starting ssh session")
-        ssh_startdocker(docker_id)
-        print("[*] Done")
-        #execute commands on docker container dont use ssh
-        print("[*] Executing commands on docker container")
-        client.containers.get(docker_id).exec_run("/bin/bash")
-        print("[*] Script complete")
-        #save docker id to file called AUTO_DOCKER_ID
-        with open("AUTO_DOCKER_ID", "w") as f:
-            f.write(docker_id)
-        print("[*] Saved docker id to file called AUTO_DOCKER_ID")
-        #get ip address of docker container, username and password
-        print("[*] Getting details of docker container")
-        client.containers.get(docker_id).exec_run("/bin/bash")
-        print("[*] Getting ip address of docker container")
-        #save to variables
-        ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
-        print("[*] Getting username of docker container")
-        username =  'root'
-        print("[*] Getting password of docker container")
-        password = dockerpassword
-        print("[*] Script complete")
-        #save details to file called AUTO_DOCKER_DETAILS
-        with open("AUTO_DOCKER_DETAILS", "w") as f:
-            f.write(ip + "\n" + username + "\n" + password)
+def nein():
+    #clean up docker container
+    docker_id = getid()
+    print("[*] Cleaning up docker container")
+    #read AUTO_DOCKER_CONTAINER_ID file
+    with open("AUTO_DOCKER_ID", "r") as f:
+        docker_iddel = f.read()
+    #delete AUTO_DOCKER_CONTAINER_ID file
+    os.remove("AUTO_DOCKER_ID")
+    #clean up docker container
+    docker_cleanup(docker_iddel)
+def maien():
+    print("[*] Starting docker container")
+    docker_make()
+    docker_id = getid()
+    print("[*] Connecting to docker container")
+    print("[*] Starting ssh session")
+    ssh_startdocker(docker_id)
+    print("[*] Done")
+    #execute commands on docker container dont use ssh
+    print("[*] Executing commands on docker container")
+    client.containers.get(docker_id).exec_run("/bin/bash")
+    print("[*] Script complete")
+    #save docker id to file called AUTO_DOCKER_ID
+    with open("AUTO_DOCKER_ID", "w") as f:
+        f.write(docker_id)
+    print("[*] Saved docker id to file called AUTO_DOCKER_ID")
+    #get ip address of docker container, username and password
+    print("[*] Getting details of docker container")
+    client.containers.get(docker_id).exec_run("/bin/bash")
+    print("[*] Getting ip address of docker container")
+    #save to variables
+    ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
+    print("[*] Getting username of docker container")
+    username =  'root'
+    print("[*] Getting password of docker container")
+    password = dockerpassword
+    print("[*] Script complete")
+    #save details to file called AUTO_DOCKER_DETAILS
+    with open("AUTO_DOCKER_DETAILS", "w") as f:
+        f.write(ip + "\n" + username + "\n" + password)
 
-            
-        print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
-        #print details to screen
-        print("[*] Printing details to screen")
-        print("[*] IP address: " + ip)
-        print("[*] Username: " + username)
-        print("[*] Password: " + password)
-        print("[*] FINISHED")
+        
+    print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
+    #print details to screen
+    print("[*] Printing details to screen")
+    print("[*] IP address: " + ip)
+    print("[*] Username: " + username)
+    print("[*] Password: " + password)
+    print("[*] FINISHED")
+    #ssh into docker container
+    print("[*] Starting ssh session")
+    os.system("ssh -p 22 " + username + "@" + ip)
 
 
 
-    else:
-        print("[!] Error: Invalid choice")
-        sys.exit(1)
 
-
-
-#main function
-main()
 
 
 
