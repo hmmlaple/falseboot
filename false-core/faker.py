@@ -116,14 +116,15 @@ def main():
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "w") as f:
-            f.write(a.decode("utf-8") + "\n" + b.decode("utf-8") + "\n" + c.decode("utf-8"))
+            f.write(a + "\n" + b + "\n" + c)
         print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
         #print details to screen
         print("[*] Printing details to screen")
-        print("[*] IP address: " + a.decode("utf-8"))
-        print("[*] Username: " + b.decode("utf-8"))
-        print("[*] Password: " + c.decode("utf-8"))
+        print("[*] IP address: " + a)
+        print("[*] Username: " + b)
+        print("[*] Password: " + c)
         print("[*] FINISHED")
+
 
 
     else:
@@ -140,5 +141,7 @@ main()
 
 
 #idk if this script works i just wrote a bunch of random stuff lol
+#also pls gimme credit if you use this script 
 
-    
+
+#https://kofi.com/hmmlopl
