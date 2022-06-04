@@ -1,4 +1,10 @@
 
+<<<<<<< HEAD
+=======
+#imports
+from logging import root
+from pydoc import cli, doc
+>>>>>>> 051070c2e0b143a18b12af1a19d69adeac356b42
 import sys
 import random
 import re
@@ -25,7 +31,6 @@ def docker_make():
         os.system("sudo docker run -d -p 22:22 sshd_tagged_image")
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
-        #run sudo docker build -t sshd_tagged_image . command to build image
         
         return dkr_id
     except Exception as e:
@@ -36,7 +41,10 @@ def getid():
     client = docker.from_env()
     client.containers.list()
     return client.containers.list()[0].id
+<<<<<<< HEAD
 
+=======
+>>>>>>> 051070c2e0b143a18b12af1a19d69adeac356b42
 def docker_cleanup(docker_iddel):
     try:
         #cleanup docker 
@@ -48,6 +56,10 @@ def docker_cleanup(docker_iddel):
     except Exception as e:
         print("[!] Error: " + str(e))
         sys.exit(1)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 051070c2e0b143a18b12af1a19d69adeac356b42
 def ssh_startdocker(docker_container_id):
     try:
         #ssh into docker container
