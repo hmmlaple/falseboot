@@ -113,7 +113,7 @@ def main():
         #save to variables
         ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        username =  root
+        username =  'root'
         print("[*] Getting password of docker container")
         password = dockerpassword
         print("[*] Script complete")
