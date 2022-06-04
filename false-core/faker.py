@@ -9,6 +9,8 @@ import docker
 import shutil
 import subprocess
 
+from psutil import users
+
 
 #imports done
 #variables
@@ -21,7 +23,7 @@ client = docker.from_env()
 def docker_make():
     try:
         client = docker.from_env()
-        client.containers.run("ubuntu:latest", "sleep infinity", detach=True)
+        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, name="faker", user=dockerusername, password=dockerpassword)
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
         return dkr_id
@@ -110,9 +112,9 @@ def main():
         #save to variables
         ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        username = client.containers.get(docker_id).exec_run("whoami")
+        username =  client.containers.get(docker_id).attrs['Config']['User']
         print("[*] Getting password of docker container")
-        password = client.containers.get(docker_id).exec_run("cat /etc/passwd")
+        password = client.containers.get(docker_id).attrs['Config']['Env'][0].split("=")[1]
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "w") as f:
