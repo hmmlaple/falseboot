@@ -64,7 +64,7 @@ def ssh_startdocker(docker_container_id):
         #apt update
         client.containers.get(docker_container_id).exec_run("apt update")
         #apt install openssh-server
-        client.containers.get(docker_container_id).exec_run("apt install openssh-server")
+        client.containers.get(docker_container_id).exec_run("apt install openssh-server --yes")
         return docker_container_id
     except Exception as e:
         print("[!] Error: " + str(e))
