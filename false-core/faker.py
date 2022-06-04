@@ -110,9 +110,9 @@ def main():
         #save to variables
         ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        username = client.containers.get(docker_id).attrs['Config']['User']
+        username = client.containers.get(docker_id).exec_run("whoami")
         print("[*] Getting password of docker container")
-        password = client.containers.get(docker_id).attrs['Config']['Env'][0].split("=")[1]
+        password = client.containers.get(docker_id).exec_run("cat /etc/passwd")
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "w") as f:
