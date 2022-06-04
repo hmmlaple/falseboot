@@ -107,23 +107,24 @@ def main():
         print("[*] Getting details of docker container")
         client.containers.get(docker_id).exec_run("/bin/bash")
         print("[*] Getting ip address of docker container")
-        IP = client.containers.get(docker_id).exec_run("hostname -I")
+        #save to variables
+        ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        USER = client.containers.get(docker_id).exec_run("whoami")
+        username = client.containers.get(docker_id).attrs['Config']['User']
         print("[*] Getting password of docker container")
-        PASSWORD = client.containers.get(docker_id).exec_run("echo $PASSWORD")
+        password = client.containers.get(docker_id).attrs['Config']['Env'][0].split("=")[1]
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "w") as f:
-            #FIX ERROR TypeError: can only concatenate tuple (not "str") to tuple
-            f.write(IP.decode("utf-8") + "\n" + USER.decode("utf-8") + "\n" + PASSWORD.decode("utf-8"))
+            f.write(ip + "\n" + username + "\n" + password)
+
             
         print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
         #print details to screen
         print("[*] Printing details to screen")
-        print("[*] IP address: " + IP)
-        print("[*] Username: " + USER)
-        print("[*] Password: " + PASSWORD)
+        print("[*] IP address: " + ip)
+        print("[*] Username: " + username)
+        print("[*] Password: " + password)
         print("[*] FINISHED")
 
 
