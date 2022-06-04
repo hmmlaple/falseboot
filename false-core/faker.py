@@ -9,7 +9,6 @@ import docker
 import shutil
 import subprocess
 
-from matplotlib.pyplot import get
 
 #imports done
 #variables
@@ -108,21 +107,21 @@ def main():
         print("[*] Getting details of docker container")
         client.containers.get(docker_id).exec_run("/bin/bash")
         print("[*] Getting ip address of docker container")
-        a = client.containers.get(docker_id).exec_run("ifconfig eth0 | grep 'inet ' | awk '{print $2}'")
+        IP = client.containers.get(docker_id).exec_run("ifconfig eth0 | grep 'inet ' | awk '{print $2}'")
         print("[*] Getting username of docker container")
-        b = client.containers.get(docker_id).exec_run("whoami")
+        USERNAME = client.containers.get(docker_id).exec_run("whoami")
         print("[*] Getting password of docker container")
-        c = client.containers.get(docker_id).exec_run("cat /etc/passwd")
+        PASSWORD = client.containers.get(docker_id).exec_run("cat /etc/passwd")
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
-        with open("AUTO_DOCKER_DETAILS", "w") as f:
-            f.write(a + "\n" + b + "\n" + c)
+        with open("AUTO_DOCKER_DETAILS", "wb") as f:
+            f.write(IP + "\n" + USERNAME + "\n" + PASSWORD)
         print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
         #print details to screen
         print("[*] Printing details to screen")
-        print("[*] IP address: " + a)
-        print("[*] Username: " + b)
-        print("[*] Password: " + c)
+        print("[*] IP address: " + IP)
+        print("[*] Username: " + USERNAME)
+        print("[*] Password: " + PASSWORD)
         print("[*] FINISHED")
 
 
