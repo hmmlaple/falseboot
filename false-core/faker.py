@@ -107,11 +107,11 @@ def main():
         print("[*] Getting details of docker container")
         client.containers.get(docker_id).exec_run("/bin/bash")
         print("[*] Getting ip address of docker container")
-        IP = client.containers.get(docker_id).exec_run("hostname -I")
+        IP = (client.containers.get(docker_id).exec_run("hostname -I"))
         print("[*] Getting username of docker container")
-        USERNAME = client.containers.get(docker_id).exec_run("whoami")
+        USERNAME = (client.containers.get(docker_id).exec_run("whoami"))
         print("[*] Getting password of docker container")
-        PASSWORD = client.containers.get(docker_id).exec_run("cat /etc/passwd | grep " + dockerusername + " | awk -F: '{print $2}'")
+        PASSWORD = (client.containers.get(docker_id).exec_run("cat /etc/passwd | grep " + dockerusername + " | awk -F: '{print $2}'"))
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "wb") as f:
