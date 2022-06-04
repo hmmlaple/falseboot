@@ -42,6 +42,8 @@ def docker_cleanup(docker_iddel):
     try:
         #cleanup docker 
         client = docker.from_env()
+        #stop docker container
+        client.containers.get(docker_iddel).stop()
         client.containers.get(docker_iddel).remove()
         return 'done'
     except Exception as e:
