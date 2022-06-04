@@ -1,6 +1,7 @@
 #redirect to docker container to capture user login
 #imports
-from pydoc import cli
+from logging import root
+from pydoc import cli, doc
 import sys
 import random
 import re
@@ -23,7 +24,7 @@ client = docker.from_env()
 def docker_make():
     try:
         client = docker.from_env()
-        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, user=dockerusername)
+        client.containers.run("ubuntu:latest", "sleep infinity", detach=True)
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
         return dkr_id
@@ -112,9 +113,9 @@ def main():
         #save to variables
         ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        username =  dockerusername
+        username =  root
         print("[*] Getting password of docker container")
-        password = client.containers.get(docker_id).attrs['Config']['Env'][0].split("=")[1]
+        password = dockerpassword
         print("[*] Script complete")
         #save details to file called AUTO_DOCKER_DETAILS
         with open("AUTO_DOCKER_DETAILS", "w") as f:
