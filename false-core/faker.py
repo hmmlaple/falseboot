@@ -38,11 +38,11 @@ def getid():
 #make docker function
 #make docker function done
 #make docker function
-def docker_cleanup(docker_container_id):
+def docker_cleanup(docker_iddel):
     try:
         #cleanup docker 
         client = docker.from_env()
-        client.containers.get(docker_container_id).remove()
+        client.containers.get(docker_iddel).remove()
         return 'done'
     except Exception as e:
         print("[!] Error: " + str(e))
