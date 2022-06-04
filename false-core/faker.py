@@ -10,15 +10,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-m ", "--mode", help="cleanup or start", required=True)
 args = parser.parse_args()
-if args.mode == "cleanup":
-    nein()
-elif args.mode == "start":
-    maien()
-else:
-    print("[!] Error: invalid mode")
-    sys.exit(1)
-#make docker function done
-
 
 #imports done
 #variables
@@ -131,6 +122,15 @@ def maien():
     os.system("ssh -p 22 " + username + "@" + ip)
 
 
+
+if args.mode == "cleanup":
+    nein()
+elif args.mode == "start":
+    maien()
+else:
+    print("[!] Error: invalid mode")
+    sys.exit(1)
+#make docker function done
 
 
 
