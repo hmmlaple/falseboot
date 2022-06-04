@@ -103,7 +103,7 @@ def maien():
     print("[*] Getting username of docker container")
     username =  'root'
     print("[*] Getting password of docker container")
-    password = dockerpassword
+    password = 'abc'
     print("[*] Script complete")
     #save details to file called AUTO_DOCKER_DETAILS
     with open("AUTO_DOCKER_DETAILS", "w") as f:
@@ -116,10 +116,11 @@ def maien():
     print("[*] IP address: " + ip)
     print("[*] Username: " + username)
     print("[*] Password: " + password)
+    os.system("sudo apt install sshpass --yes")
     print("[*] FINISHED")
     #ssh into docker container
     print("[*] Starting ssh session")
-    os.system("ssh -p 22 " + username + "@" + ip)
+    os.system("sshpass -p " + password + " ssh -o StrictHostKeyChecking=no " + username + "@" + ip)
 
 
 
