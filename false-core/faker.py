@@ -120,6 +120,7 @@ def maien():
     print("[*] FINISHED")
     #ssh into docker container
     print("[*] Starting ssh session")
+    os.system("clear")
     os.system("sshpass -p " + password + " ssh -o StrictHostKeyChecking=no " + username + "@" + ip)
 
 
