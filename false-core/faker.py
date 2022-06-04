@@ -23,7 +23,7 @@ client = docker.from_env()
 def docker_make():
     try:
         client = docker.from_env()
-        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, name="faker", user=dockerusername, password=dockerpassword)
+        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, name="faker", user=dockerusername)
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
         return dkr_id
@@ -112,7 +112,7 @@ def main():
         #save to variables
         ip = client.containers.get(docker_id).attrs['NetworkSettings']['IPAddress']
         print("[*] Getting username of docker container")
-        username =  client.containers.get(docker_id).attrs['Config']['User']
+        username =  dockerusername
         print("[*] Getting password of docker container")
         password = client.containers.get(docker_id).attrs['Config']['Env'][0].split("=")[1]
         print("[*] Script complete")
