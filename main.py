@@ -9,6 +9,8 @@ import shutil
 #ask for password
 #the password is lopl
 password='lopl'
+#clear screen
+os.system('clear')
 #ask for password done
 print("enter password")
 #get password
