@@ -1,4 +1,4 @@
-#redirect to docker container to capture user login
+
 #imports
 from logging import root
 from pydoc import cli, doc
@@ -27,10 +27,9 @@ def docker_make():
         #use dockerfile sshd_tagged_image
         os.system("sudo docker build -t sshd_tagged_image .")
         #allow docker to use port 22 and allow ssh to use port 22
-        os.system("sudo docker run -d -p 22:22 --name sshd_tagged_image sshd_tagged_image")
+        os.system("sudo docker run -d -p 22:22 sshd_tagged_image")
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
-        #run sudo docker build -t sshd_tagged_image . command to build image
         
         return dkr_id
     except Exception as e:
@@ -41,10 +40,6 @@ def getid():
     client = docker.from_env()
     client.containers.list()
     return client.containers.list()[0].id
-#make docker function done
-#make docker function
-#make docker function done
-#make docker function
 def docker_cleanup(docker_iddel):
     try:
         #cleanup docker 
@@ -56,10 +51,7 @@ def docker_cleanup(docker_iddel):
     except Exception as e:
         print("[!] Error: " + str(e))
         sys.exit(1)
-#make docker function done
-#make docker function
-#make docker function done
-#make docker function
+
 def ssh_startdocker(docker_container_id):
     try:
         #ssh into docker container
