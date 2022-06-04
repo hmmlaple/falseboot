@@ -24,9 +24,13 @@ client = docker.from_env()
 def docker_make():
     try:
         client = docker.from_env()
-        client.containers.run("ubuntu:latest", "sleep infinity", detach=True)
+        #use dockerfile sshd_tagged_image
+        os.system("sudo docker build -t sshd_tagged_image .")
+        client.containers.run("sshd_tagged_image", "sleep infinity", detach=True)
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
+        #run sudo docker build -t sshd_tagged_image . command to build image
+        
         return dkr_id
     except Exception as e:
         print("[!] Error: " + str(e))
