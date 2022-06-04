@@ -82,7 +82,7 @@ def main():
         with open("AUTO_DOCKER_ID", "r") as f:
             docker_iddel = f.read()
         #delete AUTO_DOCKER_CONTAINER_ID file
-        os.remove("AUTO_DOCKER_CONTAINER_ID")
+        os.remove("AUTO_DOCKER_ID")
         #clean up docker container
         docker_cleanup(docker_iddel)
     elif choice == "2":
