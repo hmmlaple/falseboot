@@ -103,6 +103,28 @@ def main():
         #save docker id to file called AUTO_DOCKER_ID
         with open("AUTO_DOCKER_ID", "w") as f:
             f.write(docker_id)
+        print("[*] Saved docker id to file called AUTO_DOCKER_ID")
+        #get ip address of docker container, username and password
+        print("[*] Getting details of docker container")
+        client.containers.get(docker_id).exec_run("/bin/bash")
+        print("[*] Getting ip address of docker container")
+        a = client.containers.get(docker_id).exec_run("ifconfig eth0 | grep 'inet ' | awk '{print $2}'")
+        print("[*] Getting username of docker container")
+        b = client.containers.get(docker_id).exec_run("whoami")
+        print("[*] Getting password of docker container")
+        c = client.containers.get(docker_id).exec_run("cat /etc/passwd")
+        print("[*] Script complete")
+        #save details to file called AUTO_DOCKER_DETAILS
+        with open("AUTO_DOCKER_DETAILS", "w") as f:
+            f.write(a.decode("utf-8") + "\n" + b.decode("utf-8") + "\n" + c.decode("utf-8"))
+        print("[*] Saved details to file called AUTO_DOCKER_DETAILS")
+        #print details to screen
+        print("[*] Printing details to screen")
+        print("[*] IP address: " + a.decode("utf-8"))
+        print("[*] Username: " + b.decode("utf-8"))
+        print("[*] Password: " + c.decode("utf-8"))
+        print("[*] FINISHED")
+
 
     else:
         print("[!] Error: Invalid choice")
