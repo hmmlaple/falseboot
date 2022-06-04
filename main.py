@@ -19,6 +19,8 @@ password_input=input()
 #check if password is correct
 if password_input==password:
     print("password correct")
+    #run true-core/startup.py
+    os.system("python3 true-core/startup.py")
     #sys.exit(0)
 else:
     #run startup.py
