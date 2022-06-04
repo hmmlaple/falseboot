@@ -23,7 +23,7 @@ client = docker.from_env()
 def docker_make():
     try:
         client = docker.from_env()
-        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, name="faker", user=dockerusername)
+        client.containers.run("ubuntu:latest", "sleep infinity", detach=True, user=dockerusername)
         dkr_id = client.containers.list()[0].id
         client.containers.get(dkr_id).exec_run("/bin/bash")
         return dkr_id
