@@ -4,6 +4,7 @@ from pydoc import cli
 import sys
 import random
 import re
+import os
 import docker
 import shutil
 import subprocess
@@ -77,7 +78,13 @@ def main():
         #clean up docker container
         docker_id = getid()
         print("[*] Cleaning up docker container")
-        docker_cleanup(docker_id)
+        #read AUTO_DOCKER_CONTAINER_ID file
+        with open("AUTO_DOCKER_CONTAINER_ID", "r") as f:
+            docker_iddel = f.read()
+        #delete AUTO_DOCKER_CONTAINER_ID file
+        os.remove("AUTO_DOCKER_CONTAINER_ID")
+        #clean up docker container
+        docker_cleanup(docker_iddel)
     elif choice == "2":
         #start docker container
         print("[*] Starting docker container")
@@ -94,7 +101,7 @@ def main():
         #save docker id to file called AUTO_DOCKER_ID
         with open("AUTO_DOCKER_ID", "w") as f:
             f.write(docker_id)
-            
+
     else:
         print("[!] Error: Invalid choice")
         sys.exit(1)
